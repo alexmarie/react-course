@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
 import './App.css';
 
 class App extends Component {
+
+  state = {
+    username: 'ReactN00b'
+  }
+
+  nameChangeHandler = (event) => {
+    this.setState({username: event.target.value})
+  }
+
   render() {
+
+    const style = {
+      width: "20%",
+      margin: "16px auto",
+      border: "1px solid #eee",
+      boxShadow: "0 2px 3px #ccc",
+      padding: "16px"
+  }
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="App" style={style}>
+        <UserInput
+          username={this.state.username}
+          changed={this.nameChangeHandler}></UserInput>
+        <UserOutput username={this.state.username}>is my username!</UserOutput>
+        <UserOutput>I am learning React!</UserOutput>
       </div>
     );
   }
