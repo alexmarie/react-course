@@ -19,7 +19,8 @@ class App extends Component {
       persons: [
       { name: 'Alex', age: 34 },
       { name: newName, age: 33 }
-    ]})
+      ],
+      showPersons: false})
   }
 
   nameChangeHandler = (event) => {
@@ -28,6 +29,11 @@ class App extends Component {
       { name: 'Alex', age: 34 },
       { name: event.target.value, age: 33 }
     ]})
+  }
+
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow})
   }
 
   render() {
@@ -39,21 +45,27 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map(person => {
+            return <Person
+              name = {person.name} 
+              age = {person.age} />
+          })}
+        </div> 
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <button 
           style={style}
-          onClick={() => this.switchNameHandler('Dude')}>Switch Name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age}
-          click={this.switchNameHandler.bind(this, 'Marie')}
-          changed={this.nameChangeHandler}>I like pilates!</Person>
-        <Person 
-          name={this.state.persons[1].name} age={this.state.persons[1].age}></Person>
-        <Person 
-          name={this.state.persons[2].name} age={this.state.persons[2].age}></Person>
+          onClick={this.togglePersonsHandler}>Switch Name</button>
+          {persons}
       </div>
     );
   }
